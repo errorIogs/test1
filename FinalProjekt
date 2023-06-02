@@ -1,0 +1,453 @@
+using System;
+using System.Threading;
+
+namespace HelloWorld
+{
+    class Program
+    {
+
+        //tjena Martin! de mesta av koden i mitt slut projekt har blivit förklarad i portfoliot men algorithmerna som inte är det
+        //har jag kommenterat.
+
+        
+        public int delay = 0;
+        public static string[] funnylist = {// här är alla values som ska jämföras med.
+        "Siraj",
+        "isak",
+        "villhem",
+        "viktor",
+        "alexander",
+        "Simon",
+        "Peter",
+        "Martin"
+        };
+        public static object[,] CurrencyStatus = {
+            {"USD",10.73 },
+            {"GBP",12.70 },
+            { "CAD",7.80},
+            {"NOK",1.01},
+            {"DEK",1.52},
+            {"SIR",5.53 },  
+            {"AMD",2.23 },
+            {"GFD",3.2 },
+            {"DSD",4.23 }
+        };  
+        public static  string[] cmds =
+            {
+                "bubble",
+                "quick sort",
+                "radiax",
+                "test",
+                "findstring",
+                "currency converter",
+                "beta currency converter",
+                "sort numbers",
+                "triangle"
+                
+                
+            };
+        static void line()
+        {
+            Console.WriteLine(@"-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        }
+            static string inputchecker(string s)
+            {
+                string translated = ""; 
+            try
+            {
+                for (int i = 0; i < cmds.Length; i++)
+                {
+                    if (s == cmds[i].ToLower().Substring(0, s.Length))
+                    {
+                        translated = cmds[i].ToLower();
+                    }
+                }
+            }
+            catch (Exception d)
+            {
+                Console.WriteLine(d);
+            }
+                 return translated;
+            }
+        static void radiax()
+        {
+            line();
+            Console.Beep();
+            Console.WriteLine("WORK IN PROGRESS");
+            line();
+            menu();
+        }
+        static void QS()
+        {
+            line();
+            Console.Beep();
+            Console.WriteLine("WORK IN PROGRESS");
+            line();
+            menu();
+        }
+        static void TraiangleCalculator()
+        {
+            line();
+            Console.WriteLine("Enter the height of the triangle:");
+            var a = Console.ReadLine();// sparar höjden på triangel som variabeln "a"
+            line();
+            Console.WriteLine("Enter the width of the triangle:");
+            var b = Console.ReadLine();// sparar basen på triangeln som variabeln "b"
+            Console.WriteLine("The area of the triangle is: " + Convert.ToString((Convert.ToInt32(a) * Convert.ToInt32(b)) / 2)); // räknar ut arean av triangeln med en formula
+            menu();// anroppar menu så användaren återkommer till menu
+        }
+        static void BETA_MoneyConverter() {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            line();
+
+            Console.WriteLine("THIS IS A BETA VERSION OF MONEY CONVERTER, EXPECT BUGS AND OTHER BIZARRE STUFF");
+            line();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Press the key to select a currency to convert SEK, to or from");
+            for(int i = 0; i < CurrencyStatus.Length; i++)
+            {
+                try
+                {
+
+                    Console.WriteLine("[" + Convert.ToString(i + 1) + "]: " + CurrencyStatus[i, 0]);
+                } catch(Exception e) { }
+            }
+            int k = Convert.ToInt32(Console.ReadLine())-1;
+            Console.WriteLine(k);
+            Console.WriteLine("Enter the amount of " + CurrencyStatus[k, 0] + " you want to convert from");
+            int amount = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine(Convert.ToString(amount) + " " + CurrencyStatus[k,0] + " " +  "="   + Convert.ToString((amount * Convert.ToDouble(CurrencyStatus[k, 1]))) + " SEK");
+            menu();
+                
+        }
+        static void OddAndEvenAlgorithm()// skapar en void
+        {
+            line();// linje
+            Console.WriteLine("Input or randomize?");
+            string choice = Console.ReadLine().ToLower(); // lower alla karatäkrer i string så om man skriver med stora elr små bokstäver spelar det ingen roll
+            if(choice == "input")// kollar om inputen är "input"
+            {
+                Console.WriteLine("Enter a bunch of numbers to sort, put a comma (,) between the numbers ");
+                string []numbers = Console.ReadLine().Split(",");// gör en array med datatypen string som delas på ,
+                List<int> even = new List<int>();// gör en tom list som heter even
+                List<int> odd = new List<int>();// gör en tom list som heter odd
+                for (int i = 0; i < numbers.Length; i++)// går igenom string arrayn
+                { 
+                    int number = Convert.ToInt32(numbers[i]);// konverterar local scope variabeln "number" till int32 
+                    if (number %2 == 0)// kollar om inten returnar 0
+                    {
+                        // om ekvationen på vänster är lika med 0 betyder det att inten är en jämt integer
+                        Console.ForegroundColor = ConsoleColor.Blue;// ändrar färgen till blå så man kan visualisera det lättare för användarens ögon
+
+                        Console.WriteLine("Number " + i.ToString() + ": " + numbers[i]  + " is even.");// här tar jag ut index value i string arrayn o lägger ihop med massa strubgs
+                        even.Add(number);// lägger till nummret in i "even" arrayn
+                    }
+                    else
+                    {
+                        //om de vilkorsatsen inte är sant betyder det att nummret är ett udda integer
+                        Console.ForegroundColor = ConsoleColor.Yellow;// ändrar färgen på texten så de är lättare i visualisera
+                        Console.WriteLine("Number " + i.ToString() + ": " + numbers[i] + " is odd.");
+                        odd.Add(number);// lägger till I nummret
+                    }
+                }
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("Even numbers:");
+                print(even.ToArray());// här har jag gjort en method som omvandlar en string array till en string 
+                Console.ForegroundColor = ConsoleColor.Green;
+                line();
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Odd numbers:");
+                print(odd.ToArray());
+                Console.ForegroundColor = ConsoleColor.Green;
+                line();
+                menu();// återkallar menu så användaren återkommer till menu
+            }
+        }
+        static void MoneyConverter()// skapar en void som jag kan anroppar i main void
+        {
+            line();// skapar en line med en void som jag gjorde
+            Console.Beep(); // spelar ett beep ljud så man kan visualisera att du har tryckt nåt
+            Console.WriteLine("What currency do you want to convert from?:");
+            line();// en till line
+            Console.WriteLine("1: USD");
+            Console.WriteLine("2: SEK");
+            char key = Console.ReadKey().KeyChar; // loggar vilken choicse du har tryckt på
+            if(key == '1')// kollar om input char är lika med right hand value
+            {
+                line();// skapar en ny linje
+                Console.WriteLine("USD to SEK");
+                line();
+                Console.Beep();
+                string amount = Console.ReadLine();//väntar på en input
+                Console.WriteLine(amount + " USD = " + Convert.ToString(Convert.ToUInt32(amount) * 10.72) + " SEK");// 1 usd = 10.72 så koden gångrar amount med 10.72
+                line();
+            }
+            if (key == '2')// kollar om input char är lika med right hand value
+            {
+                line();// ny linje
+                Console.WriteLine("SEK to USD");
+                line();
+                Console.Beep();
+                string amount = Console.ReadLine();// väntar på input value
+                Console.WriteLine(amount + " SEK = " + Convert.ToString(Convert.ToUInt32(amount) * 0.093) + " USD");// 1 sek = 0.093 USD så koden gångrar amount med 10.72
+                line();
+            }
+            menu();// återkallar menu så användaren återkommer till menu
+            
+        }
+        static string FindString(string s)
+        {
+            string r = "";// de här är variabeln som ska returnas
+            for(int i = 0; i < funnylist.Length; i++)// for loop igenom funny list
+            {
+                string substring = "";//
+                if(funnylist[i].Length <= s.Length)// om stringet i arrayn är längre än  input så behövs inte substring
+                {
+                    substring = funnylist[i];//  här kommer koden att  sätta substring till en av stringen i arrayn
+                    Console.WriteLine(s.Length);// printar längde på angiven string
+                    Console.WriteLine(funnylist[i].Length);// printar längde på stringen i arrayn
+                }
+                else
+                {
+                    //om stringet är inte lika lång elr längre än angiven input 
+                    Console.WriteLine(s.Length);
+                    Console.WriteLine(funnylist[i].Length);
+                    substring = funnylist[i].Substring(0, s.Length);// trimmar stringen till inputs längde 
+                    // sub string är en metod som trimmar en string från en start index till en slut index t.ex 1,3 i denna string "Hello" blir "ell"
+                    
+                }
+                if(substring.ToLower() == s.ToLower())// omvandlar alla karaktärer till lowercase o sedan jämföra dom med varandra
+                {
+                     r = funnylist[i]; // om dom matchar så sätter jag r (som står för return) 
+                }
+            }
+            return r;// skickar tillbaka stringet 
+        }
+        static void print(int[] arr)
+            //den här funktionen printar en array  på ett visst sätt så att den är läsbar
+        {
+            string result = "{";
+            for(int i = 0; i < arr.Length; i++)
+            {
+               if(i == 0)
+                {
+                    result = result  + Convert.ToString(arr[i]);
+                }
+                else
+                {
+                    result = result + ", " + Convert.ToString(arr[i]);
+                }
+            }
+            result = result + "}";
+            Console.WriteLine(result);
+        }
+        static void BubbleAlgorithm()
+        {
+            line();
+            Console.WriteLine("Would you like to manually input or randomize some numbers?");
+            Console.WriteLine("Input or Randomize?");
+            Console.Beep();
+            line();
+            var choice = Console.ReadLine().ToLower();
+            bool valid = false;
+            string[]numbers = {};
+
+            if (choice == "input") {  // om choice är "input" så kan användaren manuellt skriva in  
+                valid = true;
+                line();
+                Console.WriteLine("");
+                Console.WriteLine("input some numbers you want to get sorted, make sure to put ',' between the numbers, no space, no letters.");
+                 numbers = Console.ReadLine().Split(",");
+            }
+            else if(choice == "randomize")
+            {
+                line();
+                Console.WriteLine("How many numbers?");
+                Console.Beep();
+                var amount = Console.ReadLine();
+                Console.WriteLine("whats the lowest number?");
+                Console.Beep();
+                var lowestnumber = Console.ReadLine();
+                Console.WriteLine("Whats the highest number?");
+                Console.Beep();
+                var highestnumber = Console.ReadLine();
+                List<int> randomized = new List<int>();
+                List<string> sr = new List<string>();
+                for(int i = 0; i < Convert.ToInt32(amount); i++)
+                {
+                    var rnd = new Random();
+                    int r = rnd.Next(Convert.ToInt32(lowestnumber), Convert.ToInt32(highestnumber));
+                   randomized.Add(r);
+                    sr.Add(Convert.ToString(r));
+                }  
+                line();
+                print(randomized.ToArray());
+                line();
+                numbers = sr.ToArray();
+                Console.WriteLine("This is the randomized array.");
+                Console.WriteLine("Press any Key to continue.");
+                Console.Beep();
+                Console.ReadKey();
+                Console.Beep();
+            }
+            line();
+            List<int> sorted = new List<int>();// skapar en sorted lista
+            List<int> newinput = new List<int>();// skapar en newinput lista
+            List<int> orglist = new List<int>();// skapar en oen orginell lista 
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                Console.WriteLine(numbers[i]);  
+                newinput.Add(Convert.ToInt32(numbers[i]));// lägger in alla nummer i nya input som ska sorteras
+                orglist.Add(Convert.ToInt32(numbers[i]));//lägger in alla nummer i orglist för att jämföra med unsorted list
+            }
+            int[] unsortedarry = orglist.ToArray();// skapar en unsorted list
+            while (newinput.Count > 0)//medas längde på newinput är större än 0 så repeteras koden till de inte finns nånting kvar i listan
+            {
+                
+                int lowest;// skapar en local scope int datatype variabel 
+                lowest = 2147483647;// sätter den till de högst int32 integern
+                int lowestindex = 0;// skapar en till loal scope som representerar lägsta nummret
+                for (int i = 0; i < newinput.Count; i++)// gör en for loop inne i while loopen 
+                {
+                    Thread.Sleep(0);// debounce metod för ibland krashade koden när jag körde en array med felra nummer
+                    int v = newinput[i];// nummeret som ska jämföras
+                    Console.ForegroundColor = ConsoleColor.White;
+                    if (v < lowest)// om nummret är lägre än lowest så körs koden under
+                    {
+                       
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine(v + " is lower than " + lowest);
+                        lowest = v;//assignar nummret till lowest 
+                        lowestindex = i; //assignar indexet till lowestindex
+                        
+
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine(v + " is higher than " + lowest);
+                    }
+
+                }
+                Console.WriteLine(@"
+
+");
+                Thread.Sleep(0);
+                newinput.RemoveAt(lowestindex);//tar bort det lägsta nummret med hjälp av lowest index från unsorted arrayn
+                sorted.Add(lowest);//lägger till den i sorted array
+                Console.WriteLine(lowest + " is lowest value in the array");
+                Console.WriteLine("Removing " + lowest + " From the unsorted array");
+                int[] input = newinput.ToArray();
+                print(input);// visar hur många nummer är kvar i arrayn
+
+            }
+            Console.WriteLine("Input:");
+            print(unsortedarry);
+            line();// en metod som bara skapar en ny linje
+            Console.WriteLine("Output:");
+            print(sorted.ToArray());
+
+            Console.WriteLine("Great, The input you gave got sorted!");
+            Console.Beep();
+            Console.WriteLine(@"
+
+");
+            menu();
+        }
+        static void menu()
+        {
+            bool valid = false;
+            
+            for(int i = 0; i < cmds.Length; i++)
+            {
+                Console.WriteLine(cmds[i]);
+            }
+            
+            Console.WriteLine("Enter one of the algorithms you wish to see:");
+            
+            var input = inputchecker(Console.ReadLine().ToLower());
+            for(int i = 0; i < cmds.Length; i++)
+            {
+                if(cmds[i].ToLower() == input)
+                {
+                    valid = true; // en lite for loop för att se om inputen är en giltig
+                }
+            }
+            if (valid)
+            {
+                if(input == cmds[0].ToLower())  
+                {
+                    BubbleAlgorithm();
+                }
+                if (input == cmds[1].ToLower())
+                {
+                      QS();
+                }
+                if (input == cmds[2].ToLower())
+                {
+                    radiax();
+                }
+                if (input == cmds[3])
+                {
+                    List<int> test = new List<int>();
+                    for(int i = 0; i < 10; i++)
+                    {
+                        test.Add(i*10);
+                        Console.WriteLine(i*10);
+                    }
+                    test.RemoveAt(1);
+                    Console.WriteLine("--------------------------");
+                    for(int i = 0; i < test.Count; i++)
+                    {
+                        Console.WriteLine(test[i]);
+                    }
+                    menu();
+                }
+                if(input == cmds[4])
+                {
+
+                    Console.WriteLine("Type in a string to find in the array: ");
+                    string Result = FindString(Console.ReadLine());
+                    Console.WriteLine("This is the result: " + Result);
+                    menu();
+                }
+                if(input == cmds[5])
+                {
+                    MoneyConverter();
+
+                }
+                if(input == cmds[6])
+                {
+                    BETA_MoneyConverter();
+                }
+                if(input == cmds[7])
+                {
+                    OddAndEvenAlgorithm();
+                }
+                if(input == cmds[8])
+                {
+                    TraiangleCalculator();
+                }
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("invalid input");
+                Console.ForegroundColor = ConsoleColor.Green;
+                menu();
+            }
+        }
+        static void Main(string[] args)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(File.ReadAllText(@"C:\Users\siiraj.kenadid\Source\Repos\Algorithms\Algorithms\Intro.txt"));
+            // jag använde File modulen för att få tag på texten inne i dokument texten. Jag använde den eftersom det var mycke text o det ser mer 
+            //läsbar ut när ett annan person använder koden
+            
+            Console.WriteLine(@"");
+            menu();
+
+        }
+    }
+}
